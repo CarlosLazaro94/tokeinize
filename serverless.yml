@@ -1,0 +1,37 @@
+service: tokenization
+frameworkVersion: '3'
+
+custom:
+  stage: dev
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+
+package: 
+  individually: true
+  exclude:
+    - node_modules/**/*
+  include:
+    - src/index.ts
+    - src/**/*.ts
+functions:
+  tokens:
+    handler: src/index.handler
+    name: ${self:custom.stage}-tokens-function
+    environment:
+      REDIS_HOST: localhost
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ''
+    events:
+      - httpApi:
+          path: /tokens
+          method: get
+      - httpApi:
+          path: /tokens
+          method: post
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript

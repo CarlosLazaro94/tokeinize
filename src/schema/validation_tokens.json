@@ -1,0 +1,19 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "title": "The Post generated Token schema",
+    "required": [
+        "email",
+        "cardNumber"
+    ],
+    "properties": {
+        "email": {
+            "type": "string",
+            "pattern": "^(.+)@(.+)$"
+        }
+    },
+    "errorMessage": {
+        "required.email": "El campo email es obligatorio",
+        "required.cardNumber": "El campo card number es obligatorio"
+    }
+}
